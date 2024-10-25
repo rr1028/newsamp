@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Data Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Extract Medical Data from PDF</h1>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <label for="pdf_file">Upload a PDF file:</label>
+            <input type="file" name="pdf_file" id="pdf_file" required>
+            <button type="submit">Upload and Extract</button>
+        </form>
+
+        {% if extracted_data %}
+            <h2>Extracted Medical Data:</h2>
+            <div class="results">
+                {% for page, data in extracted_data.items() %}
+                    <h3>{{ page }}</h3>
+                    <ul>
+                        {% for keyword, value in data.items() %}
+                            <li><strong>{{ keyword }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
